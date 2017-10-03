@@ -1,0 +1,15 @@
+Kusnendi,Male,false,23
+Suprriyadi,Male,true,40
+Kusuma,Male,true,30
+Chiyo,Female,false,20
+Sutrisno,Male,false,26
+Aldi,Male,true,30
+Laraswati,Female,true,35
+Hifumi,Female,false,23
+Luosiana,Female,true,30
+Fitrina,Female,true,34
+Robinson,Male,false,30
+Loki,Male,false,27
+Lucy,Female,false,26
+Nanako,Female,false,20
+Juno,Male,true,27
