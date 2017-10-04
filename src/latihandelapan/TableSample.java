@@ -5,17 +5,16 @@
  */
 package latihandelapan;
 
-import java.awt.Dimension;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JFrame;
+
 import javax.swing.ListSelectionModel;
 import javax.swing.RowFilter;
 import javax.swing.RowSorter;
-import javax.swing.SortOrder;
+
 import static javax.swing.SortOrder.ASCENDING;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -31,10 +30,13 @@ public class TableSample extends javax.swing.JFrame {
 
     /**
      * Creates new form TableSample
+     *
+     * @throws java.io.IOException
      */
     public TableSample() throws IOException {
         initComponents();
         showPeople();
+        sortTable();
         detailsPanel.setVisible(false);
         setpack();
 
@@ -68,7 +70,7 @@ public class TableSample extends javax.swing.JFrame {
                     String age = String.valueOf(model.getValueAt(i, 3));
                     umurText.setText(age);
 
-                   // setpack();
+                    // setpack();
                 }
 
             }
@@ -78,6 +80,9 @@ public class TableSample extends javax.swing.JFrame {
         ListSelectionModel rowSelMod = personTable.getSelectionModel();
         rowSelMod.addListSelectionListener(listener);
 
+    }
+
+    private void sortTable() {
         //sort tabel dengan klik kolom tabel
         TableRowSorter<TableModel> sort = new TableRowSorter<>(personTable.getModel());
         personTable.setRowSorter(sort);
@@ -85,7 +90,6 @@ public class TableSample extends javax.swing.JFrame {
         keys.add(new RowSorter.SortKey(3, ASCENDING));
         keys.add(new RowSorter.SortKey(0, ASCENDING));
         sort.setSortKeys(keys);
-
     }
 
     private void setpack() {
@@ -362,10 +366,14 @@ public class TableSample extends javax.swing.JFrame {
 
     private void filterTextCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_filterTextCaretUpdate
         //buat object sorter
-        TableRowSorter<TableModel> sorter = new TableRowSorter<>(((DefaultTableModel) personTable.getModel()));
-        //filter tabel sesuai dengan pencarian dari filterText
-        sorter.setRowFilter(RowFilter.regexFilter(filterText.getText()));
-        personTable.setRowSorter(sorter);
+        try {
+            TableRowSorter<TableModel> sorter = new TableRowSorter<>(((DefaultTableModel) personTable.getModel()));
+            //filter tabel sesuai dengan pencarian dari filterText
+            sorter.setRowFilter(RowFilter.regexFilter(filterText.getText()));
+            personTable.setRowSorter(sorter);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            Logger.getLogger(TableSample.class.getName()).log(Level.WARNING, null, e);
+        }
     }//GEN-LAST:event_filterTextCaretUpdate
 
     /**
@@ -397,6 +405,7 @@ public class TableSample extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 try {
                     new TableSample().setVisible(true);
