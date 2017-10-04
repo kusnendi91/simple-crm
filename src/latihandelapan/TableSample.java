@@ -14,6 +14,9 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.ListSelectionModel;
 import javax.swing.RowFilter;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
+import static javax.swing.SortOrder.ASCENDING;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -26,8 +29,6 @@ import javax.swing.table.TableRowSorter;
  */
 public class TableSample extends javax.swing.JFrame {
 
-    JFrame frame = new JFrame();
-
     /**
      * Creates new form TableSample
      */
@@ -35,9 +36,7 @@ public class TableSample extends javax.swing.JFrame {
         initComponents();
         showPeople();
         detailsPanel.setVisible(false);
-        detailsPanel.setSize(10, 10);
-        setMinimumSize(new Dimension(200,200).getSize());
-        detailsPanel.setSize(0, 0);
+        setpack();
 
     }
 
@@ -69,14 +68,28 @@ public class TableSample extends javax.swing.JFrame {
                     String age = String.valueOf(model.getValueAt(i, 3));
                     umurText.setText(age);
 
+                   // setpack();
                 }
 
             }
 
         };
+
         ListSelectionModel rowSelMod = personTable.getSelectionModel();
         rowSelMod.addListSelectionListener(listener);
 
+        //sort tabel dengan klik kolom tabel
+        TableRowSorter<TableModel> sort = new TableRowSorter<>(personTable.getModel());
+        personTable.setRowSorter(sort);
+        List<RowSorter.SortKey> keys = new ArrayList<>();
+        keys.add(new RowSorter.SortKey(3, ASCENDING));
+        keys.add(new RowSorter.SortKey(0, ASCENDING));
+        sort.setSortKeys(keys);
+
+    }
+
+    private void setpack() {
+        this.pack();
     }
 
     /**
@@ -95,13 +108,13 @@ public class TableSample extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         phoneText = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        totalText = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        dueText = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        paidText = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        statusLb = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         detailsBtn = new javax.swing.JButton();
         isMarried = new javax.swing.JCheckBox();
@@ -137,7 +150,9 @@ public class TableSample extends javax.swing.JFrame {
 
         jLabel9.setText("Amount Paid");
 
-        jLabel10.setText("Status");
+        jLabel10.setText("Status ; ");
+
+        statusLb.setText("Unknown");
 
         javax.swing.GroupLayout detailsPanelLayout = new javax.swing.GroupLayout(detailsPanel);
         detailsPanel.setLayout(detailsPanelLayout);
@@ -145,20 +160,24 @@ public class TableSample extends javax.swing.JFrame {
             detailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(detailsPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(detailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel5)
-                    .addComponent(jScrollPane2)
-                    .addComponent(jLabel6)
-                    .addComponent(phoneText)
-                    .addComponent(jLabel7)
-                    .addComponent(jTextField1)
-                    .addComponent(jLabel8)
-                    .addComponent(jTextField2)
-                    .addComponent(jLabel9)
-                    .addComponent(jTextField3)
-                    .addComponent(jLabel10)
-                    .addComponent(jTextField4))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addGroup(detailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(detailsPanelLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(statusLb))
+                    .addGroup(detailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel5)
+                        .addComponent(jScrollPane2)
+                        .addComponent(jLabel6)
+                        .addComponent(phoneText)
+                        .addComponent(jLabel7)
+                        .addComponent(totalText)
+                        .addComponent(jLabel8)
+                        .addComponent(dueText)
+                        .addComponent(jLabel9)
+                        .addComponent(paidText)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         detailsPanelLayout.setVerticalGroup(
             detailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -174,20 +193,20 @@ public class TableSample extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(totalText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(dueText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel10)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(73, Short.MAX_VALUE))
+                .addComponent(paidText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(detailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(statusLb))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Main Info"));
@@ -300,7 +319,7 @@ public class TableSample extends javax.swing.JFrame {
                     .addComponent(isMarried))
                 .addGap(26, 26, 26)
                 .addComponent(detailsBtn)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -312,7 +331,7 @@ public class TableSample extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(detailsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(38, 38, 38))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -328,16 +347,23 @@ public class TableSample extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void detailsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_detailsBtnActionPerformed
-        detailsPanel.setVisible(true);
-        detailsPanel.setSize(100, 200);
-        detailsBtn.setEnabled(false);
-        
+        if (detailsPanel.isVisible()) {
+            detailsPanel.setVisible(false);
+            detailsBtn.setText("Show Details >>");
+            setpack();
+        } else {
+            detailsPanel.setVisible(true);
+            detailsBtn.setText("<< Hide Details");
+            setpack();
+        }
+
+
     }//GEN-LAST:event_detailsBtnActionPerformed
 
     private void filterTextCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_filterTextCaretUpdate
-                //buat object sorter
+        //buat object sorter
         TableRowSorter<TableModel> sorter = new TableRowSorter<>(((DefaultTableModel) personTable.getModel()));
-        //filter tabel sesuai dengan pencharian dari filterText
+        //filter tabel sesuai dengan pencarian dari filterText
         sorter.setRowFilter(RowFilter.regexFilter(filterText.getText()));
         personTable.setRowSorter(sorter);
     }//GEN-LAST:event_filterTextCaretUpdate
@@ -385,6 +411,7 @@ public class TableSample extends javax.swing.JFrame {
     private javax.swing.JTextArea addressTxtArea;
     private javax.swing.JButton detailsBtn;
     private javax.swing.JPanel detailsPanel;
+    private javax.swing.JTextField dueText;
     private javax.swing.JTextField filterText;
     private javax.swing.JComboBox<String> genderCmBox;
     private javax.swing.JCheckBox isMarried;
@@ -401,13 +428,12 @@ public class TableSample extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField namaText;
+    private javax.swing.JTextField paidText;
     private javax.swing.JTable personTable;
     private javax.swing.JTextField phoneText;
+    private javax.swing.JLabel statusLb;
+    private javax.swing.JTextField totalText;
     private javax.swing.JTextField umurText;
     // End of variables declaration//GEN-END:variables
 }
